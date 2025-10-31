@@ -1,5 +1,6 @@
 {
   "name": "crypto-watcher-service",
+  "type": "module",
   "version": "1.0.0",
   "description": "Backend crypto-watcher-link read only service",
   "main": "index.js",
@@ -19,6 +20,7 @@
   "dependencies": {
     "@fastify/rate-limit": "^10.3.0",
     "bs58check": "^4.0.0",
+    "dotenv": "^17.2.3",
     "fastify": "^5.6.1",
     "pg": "^8.16.3"
   },

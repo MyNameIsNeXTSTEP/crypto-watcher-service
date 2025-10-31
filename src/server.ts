@@ -1,12 +1,8 @@
 import { config } from 'dotenv';
 import Fastify, { type FastifyInstance } from 'fastify';
-import autoload from '@fastify/autoload';
 import { dbPlugin, rateLimitPlugin } from '@plugins/index.js';
 import publicRoutes from "@routes/public.js";
 import { __dirname } from 'src/system.js';
-import path from 'path';
-import { WatcherRepository } from '@db/repo.js';
-import { pool } from '@db/index.js';
 
 config({ path: __dirname + `/.env` });
 const port = Number(process.env.PORT) || 3000;
@@ -47,12 +43,8 @@ export async function buildServer(): Promise<FastifyInstance> {
     },
   });
 
-  await app.register(autoload, {
-    dir: path.join(__dirname, 'plugins'),
-  });
-  app.decorate('db', {
-    watcherRepository: new WatcherRepository(pool),
-  });
+  await app.register(dbPlugin);
+  await app.register(rateLimitPlugin);
   await app.register(publicRoutes, { prefix: '/public' });
 
   return app as FastifyInstance;

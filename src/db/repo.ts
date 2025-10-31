@@ -1,4 +1,5 @@
 import type { Pool } from "pg";
+import type { HealthzResponseType } from '@routes/schemas/index.js';
 
 export class WatcherRepository {
   constructor(private readonly pool: Pool) {
@@ -36,7 +37,7 @@ export class WatcherRepository {
     }));
   };
 
-  async healthCheck(): Promise<boolean> {
+  async healthCheck(): Promise<HealthzResponseType> {
     try {
       const { rows } = await this.pool.query(`SELECT id FROM watcher_links LIMIT 1`);
       /**
@@ -44,11 +45,17 @@ export class WatcherRepository {
        * В идеале, наверное, какую-то ошибку кидать с сообщением, но пока оставлю так
        */
       if (rows.length === 0) {
-        return false;
+        return {
+          status: 'error',
+        };
       }
-      return true;
+      return {
+        status: 'ok',
+      };
     } catch (error) {
-      return false;
+      return {
+        status: 'error',
+      };
     }
   };
 };

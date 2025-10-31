@@ -35,4 +35,20 @@ export class WatcherRepository {
       hashrate_th: parseFloat(row.hashrate_th).toFixed(3),
     }));
   };
+
+  async healthCheck(): Promise<boolean> {
+    try {
+      const { rows } = await this.pool.query(`SELECT id FROM watcher_links LIMIT 1`);
+      /**
+       * @todo: improve error handling
+       * В идеале, наверное, какую-то ошибку кидать с сообщением, но пока оставлю так
+       */
+      if (rows.length === 0) {
+        return false;
+      }
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
 };

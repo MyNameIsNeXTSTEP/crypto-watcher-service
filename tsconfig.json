@@ -6,7 +6,11 @@
     // "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@db/*": ["src/db/*"]
+      "@db/*": ["src/db/*"],
+      "@routes/*": ["src/routes/*"],
+      "@plugins/*": ["src/plugins/*"],
+      "@utils/*": ["src/utils/*"],
+      "@config/*": ["src/config/*"],
     },
 
     // Environment Settings

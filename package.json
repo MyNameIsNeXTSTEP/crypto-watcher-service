@@ -19,6 +19,7 @@
   "homepage": "https://github.com/MyNameIsNeXTSTEP/crypto-watcher-service#readme",
   "dependencies": {
     "@fastify/rate-limit": "^10.3.0",
+    "@sinclair/typebox": "^0.34.41",
     "bs58check": "^4.0.0",
     "dotenv": "^17.2.3",
     "fastify": "^5.6.1",

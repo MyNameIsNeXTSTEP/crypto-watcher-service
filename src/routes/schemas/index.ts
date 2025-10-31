@@ -3,7 +3,6 @@ import { type Static, Type } from '@sinclair/typebox';
 export const DashboardRequestParamsSchema = Type.Object({
   token: Type.String({
     minLength: 20,
-    maxLength: 50,
     description: 'Base58Check encoded token',
   }),
 });

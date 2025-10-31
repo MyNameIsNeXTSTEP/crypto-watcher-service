@@ -39,6 +39,17 @@ export const ErrorSchema = Type.Object({
   error: Type.String(),
 });
 
+export const HealthzResponseSchema = Type.Object({
+  status: Type.Union([
+    Type.Literal('ok'),
+    Type.Literal('error'),
+  ]),
+});
+
+export const NullSchema = Type.Null();
+
+export type NullType = Static<typeof NullSchema>;
+export type HealthzResponseType = Static<typeof HealthzResponseSchema>;
 export type DashboardRequestParamsType = Static<typeof DashboardRequestParamsSchema>;
 export type DashboardResponseType = Static<typeof DashboardResponseSchema>;
 export type WorkerResponseType = Static<typeof WorkerResponseSchema>;

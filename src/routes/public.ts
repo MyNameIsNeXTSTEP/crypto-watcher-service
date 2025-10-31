@@ -4,7 +4,9 @@ import {
   DashboardResponseSchema,
   WorkerResponseSchema,
   ErrorSchema,
+  HealthzResponseSchema,
   type DashboardRequestParamsType,
+  NullSchema,
 } from './schemas/index.js';
 
 const publicRoutes: FastifyPluginAsync = async (app) => {
@@ -16,7 +18,7 @@ const publicRoutes: FastifyPluginAsync = async (app) => {
         response: {
           200: DashboardResponseSchema,
           404: ErrorSchema,
-          304: null,
+          304: NullSchema,
           429: ErrorSchema,
         },
         tags: ['public'],
@@ -43,27 +45,14 @@ const publicRoutes: FastifyPluginAsync = async (app) => {
   app.get('/healthz', {
     schema: {
       response: {
-        200: {
-          type: 'object',
-          properties: {
-            status: { type: 'string' }
-          }
-        },
-        503: {
-          type: 'object',
-          properties: {
-            status: { type: 'string' }
-          }
-        }
+        200: HealthzResponseSchema,
+        503: HealthzResponseSchema,
       },
     },
   }, async (request, reply) => {
-    const isHealthy = await app.db.watcherRepository.healthCheck();
-    if (!isHealthy) {
-      reply.code(503);
-      return { status: 'error' };
-    }
-    return { status: 'ok' };
+    const response = await app.db.watcherRepository.healthCheck();
+    reply.code(response.status === 'error' ? 503 : 200);
+    return response;
   });
 };
 

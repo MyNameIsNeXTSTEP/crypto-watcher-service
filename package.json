@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "crypto-watcher-service",
   "version": "1.0.0",
   "description": "Backend crypto-watcher-link read only service",
   "main": "index.js",

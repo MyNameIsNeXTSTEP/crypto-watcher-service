@@ -20,3 +20,6 @@ up:
 
 down:
 	docker-compose down -v
+
+generateTestData:
+	npx tsx generateTestData.ts
